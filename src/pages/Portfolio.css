@@ -1,0 +1,638 @@
+/* Portfolio.css */
+.portfolio-section {
+  background-color: #0a0014;
+  color: white;
+  padding: 6rem 1.5rem;
+  min-height: 100vh;
+  position: relative;
+}
+
+.portfolio-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.portfolio-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.portfolio-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.portfolio-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #fff 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  position: relative;
+}
+
+.portfolio-subtitle {
+  color: #94a3b8;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.portfolio-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 4rem;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+  position: relative;
+}
+
+.tab-button {
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  background: transparent;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(236, 72, 153, 0.05));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tab-button:hover::before {
+  opacity: 1;
+}
+
+.tab-button.active {
+  background: linear-gradient(135deg, #ec4899 0%, #d946ef 100%);
+  border-color: transparent;
+  box-shadow: 0 4px 20px rgba(236, 72, 153, 0.3);
+}
+
+.tab-button svg {
+  font-size: 1.2rem;
+}
+
+.portfolio-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2.5rem;
+  padding: 1rem;
+}
+
+.portfolio-card {
+  background: rgba(17, 17, 34, 0.7);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.2), transparent);
+}
+
+.portfolio-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(236, 72, 153, 0.2);
+}
+
+.card-image-container {
+  position: relative;
+  padding-top: 56.25%;
+  overflow: hidden;
+  background: #0a0014;
+}
+
+.card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.portfolio-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+.card-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.card-description {
+  color: #94a3b8;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.card-technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.technology-tag {
+  background: rgba(236, 72, 153, 0.1);
+  color: #ec4899;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.technology-tag:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+}
+
+.card-links {
+  display: flex;
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-link {
+  color: #ec4899;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.card-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.card-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Certificates Section */
+.certificates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2.5rem;
+  padding: 1rem;
+}
+
+.certificate-card {
+  padding: 2rem;
+  background: rgba(17, 17, 34, 0.7);
+  border-radius: 16px;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.certificate-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(236, 72, 153, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.certificate-content {
+  text-align: center;
+}
+
+.certificate-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.certificate-issuer {
+  color: #ec4899;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.certificate-date {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.certificate-id {
+  color: #64748b;
+  font-size: 0.875rem;
+  font-family: monospace;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.certificate-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.certificate-image-container {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.certificate-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.certificate-image:hover {
+  transform: scale(1.02);
+}
+
+.certificate-subtitle {
+  color: #ec4899;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.certificate-recipient {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  background: rgba(236, 72, 153, 0.1);
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.certificate-validity {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+}
+
+.certificate-signatory {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.signatory-name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.signatory-title {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.certificate-duration {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+}
+
+.certificate-score {
+  background: rgba(236, 72, 153, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.score-title {
+  color: #ec4899;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.score-details {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.total-certified {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-style: italic;
+}
+
+.digital-badge-link {
+  color: #ec4899;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.digital-badge-link:hover {
+  color: #d946ef;
+  text-decoration: underline;
+}
+
+/* Skills Section */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(17, 17, 34, 0.7);
+  border-radius: 16px;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.skill-item:hover {
+  transform: translateY(-5px);
+  border-color: rgba(236, 72, 153, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.skill-icon {
+  width: 56px;
+  height: 56px;
+  transition: transform 0.3s ease;
+}
+
+.skill-item:hover .skill-icon {
+  transform: scale(1.1);
+}
+
+.skill-name {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.skill-level {
+  color: #ec4899;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(236, 72, 153, 0.1);
+  border-radius: 9999px;
+}
+
+/* Add glowing effect to featured cards */
+.portfolio-card.featured {
+  position: relative;
+}
+
+.portfolio-card.featured::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, #ec4899 0%, #d946ef 100%);
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0.1;
+  transition: opacity 0.3s ease;
+}
+
+.portfolio-card.featured:hover::after {
+  opacity: 0.2;
+}
+
+/* Add hover effect to certificate cards */
+.certificate-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(217, 70, 239, 0.1) 100%);
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.certificate-card:hover::before {
+  opacity: 1;
+}
+
+/* Add animation for skill icons */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.skill-item:hover .skill-icon {
+  animation: float 2s ease-in-out infinite;
+}
+
+/* Add gradient border to active tab */
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ec4899, #d946ef);
+}
+
+/* Add subtle animation to technology tags */
+.technology-tag {
+  transition: all 0.3s ease;
+}
+
+.technology-tag:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+}
+
+/* Add hover effect to card links */
+.card-link {
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.card-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.card-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Add responsive adjustments */
+@media (max-width: 768px) {
+  .portfolio-section {
+    padding: 4rem 1rem;
+  }
+
+  .portfolio-title {
+    font-size: 2.5rem;
+  }
+
+  .portfolio-subtitle {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .portfolio-tabs {
+    padding: 0 1rem;
+  }
+
+  .tab-button {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .portfolio-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+  }
+
+  .card-description {
+    font-size: 1rem;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  .featured-badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .certificate-icon {
+    font-size: 2rem;
+  }
+
+  .skill-level {
+    font-size: 0.75rem;
+  }
+
+  .certificate-card {
+    padding: 1.5rem;
+  }
+  
+  .certificate-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .certificates-grid {
+    grid-template-columns: 1fr;
+  }
+}

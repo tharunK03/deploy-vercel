@@ -1,0 +1,97 @@
+/* Contact.css */
+.contact-section {
+  min-height: 100vh;
+  padding: 100px 5% 60px;
+  background: linear-gradient(to right, #10001f, #0c0014);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-container {
+  max-width: 800px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-title {
+  font-size: 2.5rem;
+  color: #ec4899;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.contact-description {
+  color: #9ca3af;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.contact-form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #ec4899;
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #9ca3af;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(45deg, #ec4899, #db2777);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4);
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 30px;
+  }
+  
+  .contact-title {
+    font-size: 2rem;
+  }
+  
+  .contact-description {
+    font-size: 1rem;
+  }
+} 
