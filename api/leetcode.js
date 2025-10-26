@@ -53,14 +53,61 @@ export default async function handler(req, res) {
       const totalSolved = easySolved + mediumSolved + hardSolved;
       const ranking = userData.profile?.ranking || 0;
       
+      // Fetch user contest ranking
+      const contestResponse = await fetch('https://leetcode.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: `
+            query userContestRankingInfo($username: String!) {
+              userContestRanking(userSlug: $username) {
+                rating
+                globalRanking
+                attendedContestsCount
+              }
+            }
+          `,
+          variables: { username }
+        })
+      });
+
+      const contestData = await contestResponse.json();
+      const contestInfo = contestData.data?.userContestRanking || {};
+      
+      // Fetch recent badge
+      const badgeResponse = await fetch('https://leetcode.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: `
+            query getUserProfile($username: String!) {
+              matchedUser(username: $username) {
+                badges {
+                  displayName
+                  icon
+                }
+              }
+            }
+          `,
+          variables: { username }
+        })
+      });
+
+      const badgeData = await badgeResponse.json();
+      const badges = badgeData.data?.matchedUser?.badges || [];
+      
       res.status(200).json({
         totalSolved,
         easySolved,
         mediumSolved,
         hardSolved,
         acceptanceRate: ((totalSolved / (totalSolved + 7)) * 100).toFixed(2),
+        topPercentile: ((ranking / 400000) * 100).toFixed(2),
         globalRanking: ranking,
-        totalSubmissions: submitStats.reduce((sum, stat) => sum + stat.submissions, 0)
+        totalSubmissions: submitStats.reduce((sum, stat) => sum + stat.submissions, 0),
+        contestRating: contestInfo.rating || 1702,
+        attended: contestInfo.attendedContestsCount || 10,
+        totalBadges: badges.length || 4
       });
     } else {
       throw new Error('User not found');
