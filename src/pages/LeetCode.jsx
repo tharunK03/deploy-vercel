@@ -4,15 +4,16 @@ import '../styles/LeetCode.css';
 import { FaCode as FaCodeIcon, FaTrophy, FaCheckCircle, FaChartLine, FaLayerGroup } from 'react-icons/fa';
 
 export default function LeetCode() {
-  // Actual LeetCode stats
+  // IMPORTANT: Update these stats manually when your LeetCode stats change
+  // Visit https://leetcode.com/u/tharunk03/ and copy the latest numbers
   const stats = {
-    totalSolved: 396,      // Total problems solved
-    easySolved: 139,       // Easy problems solved
-    mediumSolved: 204,     // Medium problems solved
-    hardSolved: 53,        // Hard problems solved
-    acceptanceRate: 33.77,   // Top percentile
-    globalRanking: 257820,  // Global ranking
-    totalSubmissions: 964   // Total submissions in past year
+    totalSolved: 396,      // Update: Total problems solved
+    easySolved: 139,       // Update: Easy problems solved
+    mediumSolved: 204,     // Update: Medium problems solved
+    hardSolved: 53,        // Update: Hard problems solved
+    acceptanceRate: 33.77,   // Update: Top percentile (shown as %)
+    globalRanking: 257820,  // Update: Your global ranking
+    totalSubmissions: 964   // Update: Total submissions in past year
   };
 
   const totalProblems = stats.easySolved + stats.mediumSolved + stats.hardSolved;
