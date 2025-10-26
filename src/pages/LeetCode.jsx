@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import '../styles/LeetCode.css';
-import { FaCode as FaCodeIcon, FaTrophy, FaCheckCircle, FaChartLine, FaLayerGroup, FaCalendarAlt } from 'react-icons/fa';
+import { FaCode as FaCodeIcon } from 'react-icons/fa';
 
 export default function LeetCode() {
   const [stats, setStats] = useState({
@@ -55,228 +55,143 @@ export default function LeetCode() {
     fetchLeetCodeStats();
   }, []);
 
-  const calculatePercentage = (solved, total) => ((solved / total) * 100).toFixed(1);
-  const easyPercentage = calculatePercentage(stats.easySolved, stats.easyTotal);
-  const mediumPercentage = calculatePercentage(stats.mediumSolved, stats.mediumTotal);
-  const hardPercentage = calculatePercentage(stats.hardSolved, stats.hardTotal);
+  const totalProblems = stats.easySolved + stats.mediumSolved + stats.hardSolved;
+  const easyPercentage = ((stats.easySolved / stats.easyTotal) * 100).toFixed(1);
+  const mediumPercentage = ((stats.mediumSolved / stats.mediumTotal) * 100).toFixed(1);
+  const hardPercentage = ((stats.hardSolved / stats.hardTotal) * 100).toFixed(1);
   
   const circlePercentage = ((stats.totalSolved / 3730) * 100).toFixed(1);
-  const beatsEasy = 90.5;
-  const beatsMedium = 92.7;
-  const beatsHard = 88.3;
 
   return (
     <section id="leetcode" className="leetcode-section">
       <div className="leetcode-container">
-        <div className="section-header">
-          <h2 className="section-title">
-            LeetCode <span className="highlight">Statistics</span>
-          </h2>
+        <motion.div 
+          className="section-header"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h3 className="section-title">LeetCode Activity</h3>
           <p className="section-description">
-            Real-time competitive programming achievements{loading && <span className="loading-indicator">🔄 Updating...</span>}
+            I love the thrill of problem solving and the art of competitive programming. Tackling algorithmic challenges on LeetCode sharpens my skills, fuels my curiosity, and keeps me at the top of my game. Whether it's a tricky DP problem or a clever graph algorithm, I enjoy the process of breaking down complex problems and finding elegant solutions.
+            {loading && <span className="loading-indicator">🔄 Updating...</span>}
           </p>
-        </div>
+        </motion.div>
 
-        {/* Top Stats Section */}
-        <div className="top-stats-grid">
-          {/* Left Panel - Contest Stats */}
-          <motion.div 
-            className="contest-stats-panel"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="contest-rating">
-              <div className="stat-number-large">{stats.contestRating}</div>
-              <div className="stat-label-large">Contest Rating</div>
-            </div>
-            
-            <div className="contest-details">
-              <div className="contest-item">
-                <div className="contest-label">Global Ranking</div>
-                <div className="contest-value">{stats.globalRanking.toLocaleString()}/{stats.totalContestUsers.toLocaleString()}</div>
-              </div>
-              <div className="contest-item">
-                <div className="contest-label">Attended</div>
-                <div className="contest-value">{stats.attended}</div>
-              </div>
-            </div>
-
-            {/* Rating Graph Placeholder */}
-            <div className="rating-graph">
-              <div className="graph-placeholder">
-                <svg width="100%" height="100" viewBox="0 0 300 80" preserveAspectRatio="none">
-                  <path
-                    d="M 0,60 Q 75,55 150,45 T 300,35"
-                    stroke="#ec4899"
-                    strokeWidth="3"
-                    fill="none"
-                    className="rating-line"
+        {/* Main Stats Card */}
+        <motion.div
+          className="leetcode-card"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="card-content">
+            {/* Circular Progress & Stats */}
+            <div className="top-section">
+              <div className="circular-progress-wrapper">
+                <svg className="circular-progress" viewBox="0 0 120 120">
+                  <circle
+                    className="progress-ring-background"
+                    cx="60"
+                    cy="60"
+                    r="54"
                   />
-                  <circle cx="300" cy="35" r="5" fill="#ec4899" />
-                  <text x="290" y="30" fill="#94a3b8" fontSize="10">{stats.contestRating}</text>
+                  <circle
+                    className="progress-ring"
+                    cx="60"
+                    cy="60"
+                    r="54"
+                    strokeDasharray={`${(stats.totalSolved / 3730) * 339.29} 339.29`}
+                    transform="rotate(-90 60 60)"
+                  />
+                  <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#ec4899" />
+                      <stop offset="100%" stopColor="#f97316" />
+                    </linearGradient>
+                  </defs>
                 </svg>
+                <div className="progress-text">
+                  <div className="progress-number">{stats.totalSolved}</div>
+                  <div className="progress-label">Solved</div>
+                </div>
               </div>
-            </div>
-          </motion.div>
 
-          {/* Right Panel - Top Percentile */}
-          <motion.div 
-            className="percentile-panel"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="percentile-stat">
-              <div className="stat-number-large">{stats.topPercentile}%</div>
-              <div className="stat-label-large">Top</div>
-            </div>
-            
-            {/* Bar Chart Placeholder */}
-            <div className="bar-chart">
-              {[20, 35, 45, 50, 65, 75, 85, 95].map((height, i) => (
-                <div 
-                  key={i} 
-                  className="bar"
-                  style={{ height: `${height}%` }}
-                />
-              ))}
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Bottom Stats Section */}
-        <div className="bottom-stats-grid">
-          {/* Left Panel - Solved Problems */}
-          <motion.div 
-            className="solved-problems-panel"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <div className="circular-progress-container">
-              <svg className="circular-progress" viewBox="0 0 120 120">
-                <circle
-                  className="progress-ring-background"
-                  cx="60"
-                  cy="60"
-                  r="54"
-                  stroke="#eee"
-                  strokeWidth="12"
-                  fill="none"
-                />
-                <circle
-                  className="progress-ring"
-                  cx="60"
-                  cy="60"
-                  r="54"
-                  stroke="url(#gradient)"
-                  strokeWidth="12"
-                  fill="none"
-                  strokeDasharray={`${(stats.totalSolved / 3730) * 339.29} 339.29`}
-                  strokeLinecap="round"
-                  transform="rotate(-90 60 60)"
-                />
-                <defs>
-                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#ec4899" />
-                    <stop offset="100%" stopColor="#f97316" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div className="circular-progress-text">
-                <div className="progress-number">{stats.totalSolved}</div>
-                <div className="progress-label">Solved</div>
+              <div className="quick-stats">
+                <div className="stat-box">
+                  <div className="stat-value">{stats.contestRating}</div>
+                  <div className="stat-label-small">Contest Rating</div>
+                </div>
+                <div className="stat-box">
+                  <div className="stat-value">#{stats.globalRanking.toLocaleString()}</div>
+                  <div className="stat-label-small">Global Ranking</div>
+                </div>
+                <div className="stat-box">
+                  <div className="stat-value">{stats.topPercentile}%</div>
+                  <div className="stat-label-small">Top Percentile</div>
+                </div>
               </div>
             </div>
 
-            <div className="difficulty-breakdown">
-              {/* Easy */}
-              <div className="difficulty-item easy-diff">
+            {/* Difficulty Breakdown */}
+            <div className="difficulty-section">
+              <div className="difficulty-item easy">
                 <div className="difficulty-header">
                   <span className="difficulty-name">Easy</span>
-                  <span className="difficulty-count">{stats.easySolved}<span className="difficulty-total">/{stats.easyTotal}</span></span>
+                  <span className="difficulty-count">{stats.easySolved}/{stats.easyTotal}</span>
                 </div>
-                <div className="progress-bar-container">
+                <div className="progress-container">
                   <div className="progress-bar easy-bar" style={{ width: `${easyPercentage}%` }} />
                 </div>
-                <div className="beats-percentage">Beats {beatsEasy}%</div>
+                <div className="beats-text">Beats 90.5%</div>
               </div>
 
-              {/* Medium */}
-              <div className="difficulty-item medium-diff">
+              <div className="difficulty-item medium">
                 <div className="difficulty-header">
                   <span className="difficulty-name">Medium</span>
-                  <span className="difficulty-count">{stats.mediumSolved}<span className="difficulty-total">/{stats.mediumTotal}</span></span>
+                  <span className="difficulty-count">{stats.mediumSolved}/{stats.mediumTotal}</span>
                 </div>
-                <div className="progress-bar-container">
+                <div className="progress-container">
                   <div className="progress-bar medium-bar" style={{ width: `${mediumPercentage}%` }} />
                 </div>
-                <div className="beats-percentage">Beats {beatsMedium}%</div>
+                <div className="beats-text">Beats 92.7%</div>
               </div>
 
-              {/* Hard */}
-              <div className="difficulty-item hard-diff">
+              <div className="difficulty-item hard">
                 <div className="difficulty-header">
                   <span className="difficulty-name">Hard</span>
-                  <span className="difficulty-count">{stats.hardSolved}<span className="difficulty-total">/{stats.hardTotal}</span></span>
+                  <span className="difficulty-count">{stats.hardSolved}/{stats.hardTotal}</span>
                 </div>
-                <div className="progress-bar-container">
+                <div className="progress-container">
                   <div className="progress-bar hard-bar" style={{ width: `${hardPercentage}%` }} />
                 </div>
-                <div className="beats-percentage">Beats {beatsHard}%</div>
+                <div className="beats-text">Beats 88.3%</div>
               </div>
             </div>
-          </motion.div>
 
-          {/* Right Panel - Badges */}
-          <motion.div 
-            className="badges-panel"
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <div className="badge-stat">
-              <div className="stat-number-large">{stats.totalBadges}</div>
-              <div className="stat-label-large">Badges</div>
-            </div>
-            
-            <div className="recent-badge">
-              <div className="badge-hexagon">
-                <div className="hexagon-content">
-                  <span className="badge-number">-9-</span>
-                  <span className="badge-year">2022</span>
-                </div>
+            {/* Additional Stats */}
+            <div className="additional-stats">
+              <div className="add-stat">
+                <span className="add-stat-label">Badges:</span>
+                <span className="add-stat-value">{stats.totalBadges}</span>
               </div>
-              <div className="badge-info">
-                <div className="badge-title">Most Recent Badge</div>
-                <div className="badge-name">100 Days Badge</div>
+              <div className="add-stat">
+                <span className="add-stat-label">Contests:</span>
+                <span className="add-stat-value">{stats.attended}</span>
               </div>
             </div>
-          </motion.div>
-        </div>
+          </div>
 
-        {/* LeetCode Profile Link */}
-        <motion.div
-          className="leetcode-link-container"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-        >
-          <a 
-            href="https://leetcode.com/u/tharunk03/" 
-            target="_blank" 
+          <a
+            href="https://leetcode.com/u/tharunk03/"
+            target="_blank"
             rel="noopener noreferrer"
-            className="leetcode-profile-link"
+            className="profile-link-button"
           >
             <FaCodeIcon className="link-icon" />
-            <span>View Full Profile on LeetCode</span>
-            <span className="link-arrow">→</span>
+            <span>View Profile on LeetCode</span>
           </a>
         </motion.div>
       </div>
