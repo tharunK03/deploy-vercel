@@ -15,64 +15,24 @@ export default function LeetCode() {
   });
   const [loading, setLoading] = useState(false);
 
-  // Fetch live stats from LeetCode
+  // Fetch live stats from LeetCode via serverless function
   useEffect(() => {
     const fetchLeetCodeStats = async () => {
       setLoading(true);
       try {
-        // Using LeetCode's GraphQL API
-        const response = await fetch('https://leetcode.com/graphql', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            query: `
-              query getUserProfile($username: String!) {
-                matchedUser(username: $username) {
-                  submitStats {
-                    acSubmissionNum {
-                      difficulty
-                      count
-                      submissions
-                    }
-                  }
-                  profile {
-                    ranking
-                  }
-                  userContestRanking {
-                    globalRanking
-                  }
-                }
-              }
-            `,
-            variables: {
-              username: "tharunk03"
-            }
-          })
-        });
-
+        // Using our Vercel serverless function to bypass CORS
+        const response = await fetch('/api/leetcode?username=tharunk03');
         const data = await response.json();
         
-        if (data.data && data.data.matchedUser) {
-          const userData = data.data.matchedUser;
-          const submitStats = userData.submitStats.acSubmissionNum;
-          
-          const easySolved = submitStats.find(s => s.difficulty === 'Easy')?.count || 0;
-          const mediumSolved = submitStats.find(s => s.difficulty === 'Medium')?.count || 0;
-          const hardSolved = submitStats.find(s => s.difficulty === 'Hard')?.count || 0;
-          
-          const totalSolved = easySolved + mediumSolved + hardSolved;
-          const ranking = userData.profile?.ranking || 0;
-          
+        if (data && !data.error) {
           setStats({
-            totalSolved,
-            easySolved,
-            mediumSolved,
-            hardSolved,
-            acceptanceRate: ((totalSolved / (totalSolved + 7)) * 100).toFixed(2), // Estimated
-            globalRanking: ranking,
-            totalSubmissions: submitStats.reduce((sum, stat) => sum + stat.submissions, 0)
+            totalSolved: data.totalSolved,
+            easySolved: data.easySolved,
+            mediumSolved: data.mediumSolved,
+            hardSolved: data.hardSolved,
+            acceptanceRate: parseFloat(data.acceptanceRate),
+            globalRanking: data.globalRanking,
+            totalSubmissions: data.totalSubmissions
           });
         }
       } catch (error) {
