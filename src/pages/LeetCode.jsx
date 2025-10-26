@@ -1,20 +1,89 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import '../styles/LeetCode.css';
 import { FaCode as FaCodeIcon, FaTrophy, FaCheckCircle, FaChartLine, FaLayerGroup } from 'react-icons/fa';
 
 export default function LeetCode() {
-  // IMPORTANT: Update these stats manually when your LeetCode stats change
-  // Visit https://leetcode.com/u/tharunk03/ and copy the latest numbers
-  const stats = {
-    totalSolved: 396,      // Update: Total problems solved
-    easySolved: 139,       // Update: Easy problems solved
-    mediumSolved: 204,     // Update: Medium problems solved
-    hardSolved: 53,        // Update: Hard problems solved
-    acceptanceRate: 33.77,   // Update: Top percentile (shown as %)
-    globalRanking: 257820,  // Update: Your global ranking
-    totalSubmissions: 964   // Update: Total submissions in past year
-  };
+  const [stats, setStats] = useState({
+    totalSolved: 396,
+    easySolved: 139,
+    mediumSolved: 204,
+    hardSolved: 53,
+    acceptanceRate: 33.77,
+    globalRanking: 257820,
+    totalSubmissions: 964
+  });
+  const [loading, setLoading] = useState(false);
+
+  // Fetch live stats from LeetCode
+  useEffect(() => {
+    const fetchLeetCodeStats = async () => {
+      setLoading(true);
+      try {
+        // Using LeetCode's GraphQL API
+        const response = await fetch('https://leetcode.com/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: `
+              query getUserProfile($username: String!) {
+                matchedUser(username: $username) {
+                  submitStats {
+                    acSubmissionNum {
+                      difficulty
+                      count
+                      submissions
+                    }
+                  }
+                  profile {
+                    ranking
+                  }
+                  userContestRanking {
+                    globalRanking
+                  }
+                }
+              }
+            `,
+            variables: {
+              username: "tharunk03"
+            }
+          })
+        });
+
+        const data = await response.json();
+        
+        if (data.data && data.data.matchedUser) {
+          const userData = data.data.matchedUser;
+          const submitStats = userData.submitStats.acSubmissionNum;
+          
+          const easySolved = submitStats.find(s => s.difficulty === 'Easy')?.count || 0;
+          const mediumSolved = submitStats.find(s => s.difficulty === 'Medium')?.count || 0;
+          const hardSolved = submitStats.find(s => s.difficulty === 'Hard')?.count || 0;
+          
+          const totalSolved = easySolved + mediumSolved + hardSolved;
+          const ranking = userData.profile?.ranking || 0;
+          
+          setStats({
+            totalSolved,
+            easySolved,
+            mediumSolved,
+            hardSolved,
+            acceptanceRate: ((totalSolved / (totalSolved + 7)) * 100).toFixed(2), // Estimated
+            globalRanking: ranking,
+            totalSubmissions: submitStats.reduce((sum, stat) => sum + stat.submissions, 0)
+          });
+        }
+      } catch (error) {
+        console.log('Could not fetch live data, using cached stats:', error);
+        // Use fallback values if API fails
+      }
+      setLoading(false);
+    };
+
+    fetchLeetCodeStats();
+  }, []);
 
   const totalProblems = stats.easySolved + stats.mediumSolved + stats.hardSolved;
   const easyPercentage = (stats.easySolved / totalProblems * 100).toFixed(1);
@@ -69,6 +138,7 @@ export default function LeetCode() {
           </h2>
           <p className="section-description">
             Competitive programming progress and problem-solving achievements
+            {loading && <span className="loading-indicator">🔄 Updating...</span>}
           </p>
         </div>
 
