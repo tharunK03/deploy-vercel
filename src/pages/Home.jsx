@@ -1,8 +1,24 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { FaLinkedin, FaGithub, FaCode } from 'react-icons/fa';
 import '../styles/Home.css';
 
 export default function Home() {
+  const scrollToLeetCode = (e) => {
+    e.preventDefault();
+    const navbar = document.querySelector('.navbar');
+    const navbarHeight = navbar ? navbar.offsetHeight : 0;
+    const leetcodeSection = document.getElementById('leetcode');
+    
+    if (leetcodeSection) {
+      const elementPosition = leetcodeSection.offsetTop - navbarHeight;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <div className="home-container">
       <div className="text-content">
@@ -39,9 +55,9 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
         >
-          Passionate about Artificial Intelligence, Machine Learning, and building innovative projects. 
-          I love solving complex problems and turning ideas into reality through code. 
-          Currently exploring the fascinating world of AI while developing practical solutions.
+          Passionate about Frontend Development, Machine Learning, and Data Science. 
+          I love building intuitive user interfaces, developing AI models, and analyzing complex datasets. 
+          Currently exploring Backend Development, Cloud Technologies, and Generative AI while creating practical, impactful solutions.
         </motion.p>
         
         <motion.div 
@@ -50,7 +66,7 @@ export default function Home() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.8 }}
         >
-          {['Python', 'Machine Learning', 'Deep Learning', 'Problem Solving', 'Data Structures', 'AI Projects'].map((skill) => (
+          {['Frontend Development', 'Backend & Cloud', 'Machine Learning', 'Gen AI', 'Data Science', 'React.js'].map((skill) => (
             <span key={skill}>{skill}</span>
           ))}
         </motion.div>
@@ -72,10 +88,13 @@ export default function Home() {
           transition={{ duration: 0.5, delay: 1.2 }}
         >
           <a href="https://www.linkedin.com/in/tharun-k03/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <i className="fab fa-linkedin"></i>
+            <FaLinkedin />
           </a>
           <a href="https://github.com/tharunK03" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <i className="fab fa-github"></i>
+            <FaGithub />
+          </a>
+          <a href="#leetcode" onClick={scrollToLeetCode} aria-label="LeetCode">
+            <FaCode />
           </a>
         </motion.div>
       </div>

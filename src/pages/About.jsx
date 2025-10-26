@@ -20,9 +20,7 @@ const About = () => {
       <div className="about-container">
         <h2 className="about-title">About Me</h2>
         <p className="about-description">
-        I’m a tech enthusiast who believes every problem is an opportunity to create something valuable. I enjoy building practical solutions, whether it’s through data analysis, machine learning, or full stack development. With each project, I aim to learn something new and make a meaningful impact.
-
-
+        I'm a passionate AIML student and problem solver who loves building innovative solutions across frontend development, machine learning, and data science. I enjoy creating intuitive user interfaces, developing intelligent AI models, and analyzing complex datasets to extract meaningful insights. Currently exploring Backend Development, Cloud Platforms, and Generative AI technologies. With a strong foundation in full-stack development and a deep interest in artificial intelligence, I aim to bridge the gap between cutting-edge technology and practical applications. Every project is an opportunity to learn, innovate, and make a meaningful impact.
         </p>
         <div className="about-buttons">
           <button className="about-button-primary" onClick={handleDownloadCV}>
