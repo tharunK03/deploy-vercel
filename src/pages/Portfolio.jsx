@@ -17,6 +17,10 @@ import jsIcon from '../assets/icons/js-icon.svg';
 import javaIcon from '../assets/icons/java-icon.svg';
 import mysqlIcon from '../assets/icons/mysql-icon.svg';
 import tensorflowIcon from '../assets/icons/tensorflow-icon.svg';
+import awsIcon from '../assets/icons/aws-svgrepo-com (1).svg';
+import dockerIcon from '../assets/icons/docker-svgrepo-com.svg';
+import kubernetesIcon from '../assets/icons/kubernetes-svgrepo-com.svg';
+import jenkinsIcon from '../assets/icons/jenkins-svgrepo-com.svg';
 import './Portfolio.css';
 
 const Portfolio = () => {
@@ -87,10 +91,15 @@ const Portfolio = () => {
 
   const skills = [
     { name: 'Python', icon: pythonIcon, level: 'Intermediate' },
-
     { name: 'Java', icon: javaIcon, level: 'Intermediate' },
     { name: 'MySQL', icon: mysqlIcon, level: 'Intermediate' },
-    { name: 'TensorFlow', icon: tensorflowIcon, level: 'Intermediate' }
+    { name: 'TensorFlow', icon: tensorflowIcon, level: 'Intermediate' },
+    { name: 'React', icon: reactIcon, level: 'Intermediate' },
+    { name: 'Node.js', icon: nodeIcon, level: 'Intermediate' },
+    { name: 'AWS', icon: awsIcon, level: 'Intermediate' },
+    { name: 'Docker', icon: dockerIcon, level: 'Intermediate' },
+    { name: 'Kubernetes', icon: kubernetesIcon, level: 'Intermediate' },
+    { name: 'Jenkins', icon: jenkinsIcon, level: 'Intermediate' }
   ];
 
   return (
