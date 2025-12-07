@@ -51,7 +51,7 @@ export default function LeetCode() {
             >
               <div className="leetcode-card">
                 <img
-                  src="https://leetcard.jacoblin.cool/Tharun_03k?theme=light&ext=heatmap"
+                  src="https://leetcard.jacoblin.cool/Tharun03k?theme=light&ext=heatmap"
                   alt="LeetCode Stats"
                   className="leetcode-image"
                   onError={(e) => {
