@@ -43,7 +43,7 @@ export default function LeetCode() {
             className="w-full flex justify-center"
           >
             <a
-              href="https://leetcode.com/u/Tharun_03k/"
+              href="https://leetcode.com/u/Tharun03k/"
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full max-w-3xl"
