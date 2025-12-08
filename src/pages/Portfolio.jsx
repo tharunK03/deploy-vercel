@@ -1,5 +1,5 @@
 // src/pages/Portfolio.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FaCode, FaCertificate, FaTools, FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import realEstateImg from '../assets/real-estate-marketplace.png';
 import discordBotImg from '../assets/discord-bot.png';
@@ -21,29 +21,66 @@ import awsIcon from '../assets/icons/aws-svgrepo-com (1).svg';
 import dockerIcon from '../assets/icons/docker-svgrepo-com.svg';
 import kubernetesIcon from '../assets/icons/kubernetes-svgrepo-com.svg';
 import jenkinsIcon from '../assets/icons/jenkins-svgrepo-com.svg';
+import legal1Img from '../assets/legalview/legal1.jpeg';
+import legal2Img from '../assets/legalview/legal2.jpeg';
+import legal3Img from '../assets/legalview/legal3.jpeg';
+import legal4Img from '../assets/legalview/legal4.jpeg';
 import './Portfolio.css';
 
 const Portfolio = () => {
   const [activeTab, setActiveTab] = useState('projects');
+  const [imageIndexes, setImageIndexes] = useState({});
 
-  const projects = [
-    {
-      title: 'Real Estate Marketplace',
-      description: 'A comprehensive real estate platform featuring ML-powered price validation, fraud detection, and an AI chatbot assistant. The platform streamlines property listing and browsing with automated verification processes, ensuring fair pricing through advanced anomaly detection algorithms.',
-      image: realEstateImg,
-      technologies: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'Random Forest', 'Isolation Forest', 'Gemini API', 'JWT', 'AWS S3'],
-      github: 'https://github.com/tharunK03/Hestia',
-      featured: true
-    },
-    {
-      title: 'Lung Disease Detection Web App',
-      description: 'A Flask-based web application that uses a Convolutional Neural Network (CNN) to classify lung diseases from chest X-ray images. The system can detect five categories: Bacterial Pneumonia, COVID-19, Normal, Tuberculosis, and Viral Pneumonia, providing real-time predictions through an intuitive interface.',
-      image: discordBotImg,
-      technologies: ['Python', 'Flask', 'TensorFlow', 'CNN', 'HTML', 'CSS', 'Keras', 'Data Augmentation'],
-      github: 'https://github.com/tharunK03/Lung-Disease-Prediction',
-      featured: true
-    }
-  ];
+  const projects = useMemo(
+    () => [
+      {
+        title: 'Real Estate Marketplace',
+        description:
+          'A comprehensive real estate platform featuring ML-powered price validation, fraud detection, and an AI chatbot assistant. The platform streamlines property listing and browsing with automated verification processes, ensuring fair pricing through advanced anomaly detection algorithms.',
+        image: realEstateImg,
+        technologies: [
+          'MongoDB',
+          'Express.js',
+          'React.js',
+          'Node.js',
+          'Random Forest',
+          'Isolation Forest',
+          'Gemini API',
+          'JWT',
+          'AWS S3'
+        ],
+        github: 'https://github.com/tharunK03/Hestia',
+        featured: true
+      },
+      {
+        title: 'LegalView – AI-Powered Legal Document Assistant',
+        description:
+          'Production-ready RAG platform for intelligent legal document review, summarization, and context-aware Q&A. Built with FastAPI, LangChain, and Google Gemini AI, backed by FAISS, with drag-and-drop ingestion, real-time chat, glassmorphism UI, and full document lifecycle management.',
+        dynamicImages: [
+          legal1Img,
+          legal2Img,
+          legal3Img,
+          legal4Img
+        ],
+        image: discordBotImg,
+        technologies: [
+          'FastAPI',
+          'LangChain',
+          'React',
+          'TypeScript',
+          'Google Gemini',
+          'FAISS',
+          'Docker',
+          'Kubernetes',
+          'AWS CI/CD',
+          'Grafana + Prometheus'
+        ],
+        github: 'https://github.com/tharunK03/LegalView',
+        featured: true
+      }
+    ],
+    []
+  );
 
   const certificates = [
     {
@@ -102,6 +139,21 @@ const Portfolio = () => {
     { name: 'Jenkins', icon: jenkinsIcon, level: 'Intermediate' }
   ];
 
+  useEffect(() => {
+    const intervals = projects.map((project, index) => {
+      if (!project.dynamicImages || project.dynamicImages.length < 2) return null;
+
+      return setInterval(() => {
+        setImageIndexes((prev) => ({
+          ...prev,
+          [index]: ((prev[index] ?? 0) + 1) % project.dynamicImages.length
+        }));
+      }, 4000);
+    });
+
+    return () => intervals.forEach((intervalId) => intervalId && clearInterval(intervalId));
+  }, [projects]);
+
   return (
     <section id="portfolio" className="portfolio-section">
       <div className="portfolio-container">
@@ -142,7 +194,15 @@ const Portfolio = () => {
               {projects.map((project, index) => (
                 <div key={index} className={`portfolio-card project-card ${project.featured ? 'featured' : ''}`}>
                   <div className="card-image-container">
-                    <img src={project.image} alt={project.title} className="card-image" />
+                    <img
+                      src={
+                        project.dynamicImages
+                          ? project.dynamicImages[imageIndexes[index] ?? 0] || project.image
+                          : project.image
+                      }
+                      alt={project.title}
+                      className="card-image"
+                    />
                     {project.featured && <span className="featured-badge">Featured</span>}
                   </div>
                   <div className="card-content">
