@@ -87,3 +87,10 @@
     flex-wrap: wrap;
   }
 }
+
+/* Hide navbar entirely on mobile to enforce swipe-only navigation */
+@media (max-width: 768px) {
+  .navbar {
+    display: none;
+  }
+}

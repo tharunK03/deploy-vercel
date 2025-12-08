@@ -112,6 +112,11 @@ export default function Home() {
           />
         </div>
       </motion.div>
+
+      <div className="swipe-hint-mobile" aria-hidden="true">
+        <span className="swipe-text">Swipe</span>
+        <span className="swipe-arrow">→</span>
+      </div>
     </div>
   );
 }
