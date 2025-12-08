@@ -158,9 +158,10 @@ html {
 
   .section-strip {
     display: flex;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     transition: transform 0.35s ease;
+    overflow: hidden;
   }
 
   .section-strip-mobile .section {
@@ -169,7 +170,14 @@ html {
     padding: 70px 16px 60px;
     flex-shrink: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+  }
+
+  /* Ensure inner content doesn't hide under the title */
+  .section-strip-mobile .section .section-content {
+    padding-top: 48px;
   }
 }
 
