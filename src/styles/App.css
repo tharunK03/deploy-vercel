@@ -126,13 +126,16 @@ html {
 /* Mobile-only full-page behavior */
 @media (max-width: 768px) {
   html, body {
-    height: 100%;
-    overflow: hidden;
+    height: auto;
+    overflow-x: hidden;
   }
 
   .main-content {
     height: 100vh;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
   }
 
   .section {
@@ -140,6 +143,7 @@ html {
     width: 100%;
     padding: 70px 16px 60px;
     scroll-margin-top: 0;
+    scroll-snap-align: start;
   }
 
   .mobile-page-title {
@@ -159,6 +163,7 @@ html {
     font-weight: 700;
     letter-spacing: 0.4px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
   }
 }
 
