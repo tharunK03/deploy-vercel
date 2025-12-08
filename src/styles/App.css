@@ -87,24 +87,6 @@ html {
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
-  html, body {
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .main-content {
-    height: 100vh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-  }
-
-  .section {
-    min-height: 100vh;
-    scroll-snap-align: start;
-    padding: 70px 16px;
-    scroll-margin-top: 0;
-  }
-
   .nav-container {
     flex-direction: column;
     align-items: center;
@@ -139,4 +121,48 @@ html {
     padding: 80px 14px 60px;
     scroll-margin-top: 110px;
   }
+}
+
+/* Mobile-only full-page behavior */
+@media (max-width: 768px) {
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .main-content {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .section {
+    min-height: 100vh;
+    width: 100%;
+    padding: 70px 16px 60px;
+    scroll-margin-top: 0;
+  }
+
+  .mobile-page-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 900;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: rgba(10, 12, 28, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* Desktop hide for mobile title */
+.mobile-page-title {
+  display: none;
 }

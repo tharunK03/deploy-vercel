@@ -1,5 +1,5 @@
 // App.jsx
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Portfolio from './pages/Portfolio';
@@ -10,8 +10,17 @@ import Contact from './pages/Contact';
 import './styles/App.css';
 
 function App() {
+  const [activeSection, setActiveSection] = useState('home');
   const touchData = useRef({ x: 0, y: 0, time: 0 });
   const sections = ['home', 'about', 'experience', 'portfolio', 'leetcode', 'contact'];
+  const sectionTitles = {
+    home: 'Home',
+    about: 'About',
+    experience: 'Experience',
+    portfolio: 'Portfolio',
+    leetcode: 'LeetCode',
+    contact: 'Contact'
+  };
 
   const getNavHeight = () => {
     const navbar = document.querySelector('.navbar');
@@ -24,6 +33,7 @@ function App() {
     const navbarHeight = getNavHeight();
     const elementPosition = element.offsetTop - navbarHeight;
     window.scrollTo({ top: elementPosition, behavior: 'smooth' });
+    setActiveSection(sectionId);
   };
 
   const handleTouchStart = (event) => {
@@ -60,9 +70,32 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const navbarHeight = getNavHeight();
+      const scrollPosition = window.scrollY + navbarHeight + 10;
+      let current = activeSection;
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el && scrollPosition >= el.offsetTop) {
+          current = id;
+        }
+      });
+      if (current !== activeSection) {
+        setActiveSection(current);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeSection, sections]);
+
   return (
     <div className="app">
       <Navbar />
+      <div className="mobile-page-title">
+        {sectionTitles[activeSection] || 'Home'}
+      </div>
       <main
         className="main-content"
         onTouchStart={handleTouchStart}
