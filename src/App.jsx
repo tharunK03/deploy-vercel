@@ -1,5 +1,5 @@
 // App.jsx
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Portfolio from './pages/Portfolio';
@@ -11,8 +11,12 @@ import './styles/App.css';
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
+  const [isMobile, setIsMobile] = useState(false);
   const touchData = useRef({ x: 0, y: 0, time: 0 });
-  const sections = ['home', 'about', 'experience', 'portfolio', 'leetcode', 'contact'];
+  const sections = useMemo(
+    () => ['home', 'about', 'experience', 'portfolio', 'leetcode', 'contact'],
+    []
+  );
   const sectionTitles = {
     home: 'Home',
     about: 'About',
@@ -37,13 +41,13 @@ function App() {
   };
 
   const handleTouchStart = (event) => {
-    if (window.innerWidth > 768) return;
+    if (!isMobile) return;
     const touch = event.touches[0];
     touchData.current = { x: touch.clientX, y: touch.clientY, time: Date.now() };
   };
 
   const handleTouchEnd = (event) => {
-    if (window.innerWidth > 768) return;
+    if (!isMobile) return;
     const start = touchData.current;
     if (!start.time) return;
 
@@ -52,78 +56,63 @@ function App() {
     const dy = touch.clientY - start.y;
     touchData.current = { x: 0, y: 0, time: 0 };
 
-    if (Math.abs(dx) < 60 || Math.abs(dy) > 80) return;
+    if (Math.abs(dx) < 60 || Math.abs(dy) > 60) return;
 
-    const navbarHeight = getNavHeight();
-    const scrollPosition = window.scrollY + navbarHeight + 5;
-    let currentIndex = 0;
-    sections.forEach((id, index) => {
-      const el = document.getElementById(id);
-      if (el && scrollPosition >= el.offsetTop) {
-        currentIndex = index;
-      }
-    });
-
+    const currentIndex = sections.indexOf(activeSection);
     const nextIndex = dx < 0 ? Math.min(sections.length - 1, currentIndex + 1) : Math.max(0, currentIndex - 1);
     if (nextIndex !== currentIndex) {
-      scrollToSection(sections[nextIndex]);
+      setActiveSection(sections[nextIndex]);
     }
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      const navbarHeight = getNavHeight();
-      const scrollPosition = window.scrollY + navbarHeight + 10;
-      let current = activeSection;
-      sections.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el && scrollPosition >= el.offsetTop) {
-          current = id;
-        }
-      });
-      if (current !== activeSection) {
-        setActiveSection(current);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeSection, sections]);
+    const updateViewport = () => setIsMobile(window.innerWidth <= 768);
+    updateViewport();
+    window.addEventListener('resize', updateViewport);
+    return () => window.removeEventListener('resize', updateViewport);
+  }, []);
 
   return (
     <div className="app">
       <Navbar />
-      <div className="mobile-page-title">
-        {sectionTitles[activeSection] || 'Home'}
-      </div>
+      {isMobile && (
+        <div className="mobile-page-title">
+          {sectionTitles[activeSection] || 'Home'}
+        </div>
+      )}
       <main
         className="main-content"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <section id="home" className="section">
-          <Home />
-        </section>
-        
-        <section id="about" className="section">
-          <About />
-        </section>
-        
-        <section id="experience" className="section">
-          <Experience />
-        </section>
-        
-        <section id="portfolio" className="section">
-          <Portfolio />
-        </section>
-        
-        <section id="leetcode" className="section">
-          <LeetCode />
-        </section>
-        
-        <section id="contact" className="section">
-          <Contact />
-        </section>
+        <div
+          className={`section-strip ${isMobile ? 'section-strip-mobile' : ''}`}
+          style={isMobile ? { transform: `translateX(-${sections.indexOf(activeSection) * 100}vw)` } : {}}
+        >
+          <section id="home" className="section">
+            <Home />
+          </section>
+          
+          <section id="about" className="section">
+            <About />
+          </section>
+          
+          <section id="experience" className="section">
+            <Experience />
+          </section>
+          
+          <section id="portfolio" className="section">
+            <Portfolio />
+          </section>
+          
+          <section id="leetcode" className="section">
+            <LeetCode />
+          </section>
+          
+          <section id="contact" className="section">
+            <Contact />
+          </section>
+        </div>
       </main>
     </div>
   );
